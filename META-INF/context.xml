@@ -1,0 +1,18 @@
+<Context>
+         <!-- 使用阿里巴巴的DruidDataSource配置针对MySQL数据库的JNDI数据源 -->
+          <Resource
+             name="jdbc/MysqlDataSource"
+             factory="com.alibaba.druid.pool.DruidDataSourceFactory"
+             auth="Container"
+             type="javax.sql.DataSource"
+             driverClassName="com.mysql.jdbc.Driver"
+             url="jdbc:mysql://192.168.2.129:3306/javatest"
+             username="root"
+             password="tingyun2o13"
+             maxActive="50"
+             maxWait="10000"
+             removeabandoned="true"
+             removeabandonedtimeout="60"
+             logabandoned="false"
+             filters="stat"/>
+     </Context>

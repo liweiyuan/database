@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+<welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+ <display-name>test_database</display-name>
+   <!-- jndi start -->
+   <context-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>classpath:applicationContext.xml</param-value>  
+    </context-param>  
+  
+    <listener>  
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+    </listener>  
+   <!-- jndi end -->
+ <servlet>
+  <servlet-name>spring</servlet-name>
+  <servlet-class>
+    org.springframework.web.servlet.DispatcherServlet
+  </servlet-class>
+  <init-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </init-param>
+  <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+  <servlet-name>spring</servlet-name>
+  <url-pattern>/</url-pattern>
+</servlet-mapping>
+<!-- 管理proxool配置文件 -->
+<servlet>
+  <servlet-name>proxoolServletConfigurator</servlet-name>
+  <servlet-class>org.logicalcobwebs.proxool.configuration.ServletConfigurator</servlet-class>
+  <init-param>
+    <param-name>propertyFile</param-name><!-- xmlFile -->
+    <param-value>WEB-INF\classes\proxool.properties</param-value>
+  </init-param>
+  <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet>
+  <servlet-name>Admin</servlet-name>
+  <servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>Admin</servlet-name>
+  <url-pattern>/admin.proxool</url-pattern>
+</servlet-mapping>
+</web-app>
