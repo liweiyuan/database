@@ -57,7 +57,7 @@
     <orderEntry type="library" name="Maven: com.cloudhopper.proxool:proxool-cglib:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.39" level="project" />
     <orderEntry type="library" name="Maven: com.ibm.db2.jcc:db2jcc4:10.1" level="project" />
-    <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.2-1002-jdbc4" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:9.3-1100-jdbc41" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:druid:1.0.25" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
