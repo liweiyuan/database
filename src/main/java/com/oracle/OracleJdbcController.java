@@ -39,22 +39,11 @@ public class OracleJdbcController {
         String insertsql1 = "insert into test_user (id, name, birthday, longcontent)  values (?,?,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),?)";
         String insertsql2 = "insert into test_user(ID,NAME,BIRTHDAY,LONGCONTENT2) values (?,?,?,?)";
         String updatesql = "update test_user set name=? where id=1";
-        //String callsql = "{call proc_update(?)}";
-        // String selectsql = "select * from test_user where name like ? and rownum<=?";
-//        String deletesql1 = "delete from test_user where name like ?";
-//        String deletesql2 = "delete from test_user where id = ?";
         String deletesql = "delete from test_user";
         String mulselctsql = "select * from (select name,birthday from test_user where name like ?)";
         try {
             Connection conn = sqlExcute.getConnPs("oracle", "Jdbc");
 
-//        	PreparedStatement preparedStatement = conn.prepareStatement(deletesql1);
-//            preparedStatement.setString(1, "%proc%");
-//            preparedStatement.execute();
-//
-//            PreparedStatement preparedStatement2 = conn.prepareStatement(deletesql2);
-//            preparedStatement2.setInt(1,1002);
-//            preparedStatement2.execute();
 
             PreparedStatement preparedStatement = conn.prepareStatement(deletesql);
             preparedStatement.execute();
@@ -62,42 +51,20 @@ public class OracleJdbcController {
             preparedStatement = conn.prepareStatement(insertsql1);
             preparedStatement.setInt(1, 1002);
             preparedStatement.setString(2, "PreparedStatement");
-            //preparedStatement.setClob(3, new StringReader(getRandomString(25000)));
             Clob clob = conn.createClob();
             String random = sqlExcute.getRandomString(25000);
             clob.setString(1, random);
             preparedStatement.setClob(3, clob);
             preparedStatement.executeUpdate();
 
-            preparedStatement = conn.prepareStatement(insertsql2);
-            int i = 1;
-            Object[] values = {2, "yhb", "2017-01-20", null};
-            for (Object o : values) {
-                int key = i++;
-                if (o == null) {
-                    preparedStatement.setObject(key, o, java.sql.Types.VARCHAR);
-                } else {
-                    System.out.println("-------key===" + key + "---------value========" + o);
-                    preparedStatement.setObject(key, o);
-                }
-            }
-            preparedStatement.executeUpdate();
-
             preparedStatement = conn.prepareStatement(updatesql);
             preparedStatement.setString(1, "%update_ps%");
             preparedStatement.execute();
 
-            /*CallableStatement cstmt = conn.prepareCall(callsql);
-            cstmt.setString(1, "call");
-            cstmt.execute();
-            cstmt.close();*/
-
             preparedStatement = conn.prepareStatement(mulselctsql);
             preparedStatement.setString(1, "%update_ps%");
-            //preparedStatement.setInt(2, 5);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                // stringBuffer.append(rs.getString("name")+"- -"+rs.getString("birthday"));
                 queryResult = rs.getString(1) + " - " + rs.getString(2) + "<br>";
             }
 
@@ -199,8 +166,6 @@ public class OracleJdbcController {
         String insertsql1 = "insert into test_user (id, name, birthday, longcontent)  values (?,?,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),?)";
         String insertsql2 = "insert into test_user(ID,NAME,BIRTHDAY,LONGCONTENT2) values (?,?,?,?)";
         String updatesql = "update test_user set name=? where id=1";
-        //String callsql = "{call proc_update(?)}";
-        // String selectsql = "select * from test_user where name like ? and rownum<=?";
         String deletesql1 = "delete from test_user where name like ?";
         String deletesql2 = "delete from test_user where id = ?";
         String mulselctsql = "select * from (select name,birthday from test_user where name like ?)";
@@ -218,42 +183,15 @@ public class OracleJdbcController {
 
             preparedStatement = conn.prepareStatement(insertsql1);
             preparedStatement.setInt(1, 1);
-            preparedStatement.setString(2, "PreparedStatement");
-            //preparedStatement.setClob(3, new StringReader(getRandomString(25000)));
-            Clob clob = conn.createClob();
-            clob.setString(1, getRandomString(25000));
-            preparedStatement.setClob(3, clob);
-            preparedStatement.executeUpdate();
-
-            preparedStatement = conn.prepareStatement(insertsql2);
-            int i = 1;
-            Object[] values = {2, "yhb", "2017-01-20", null};
-            for (Object o : values) {
-                int key = i++;
-                if (o == null) {
-                    preparedStatement.setObject(key, o, java.sql.Types.VARCHAR);
-                } else {
-                    System.out.println("-------key===" + key + "---------value========" + o);
-                    preparedStatement.setObject(key, o);
-                }
-            }
-            preparedStatement.executeUpdate();
-
+            preparedStatement.setString(2, "update_ps");
             preparedStatement = conn.prepareStatement(updatesql);
             preparedStatement.setString(1, "%update_ps%");
             preparedStatement.execute();
 
-           /* CallableStatement cstmt = conn.prepareCall(callsql);
-            cstmt.setString(1, "call");
-            cstmt.execute();
-            cstmt.close();*/
-
             preparedStatement = conn.prepareStatement(mulselctsql);
             preparedStatement.setString(1, "%update_ps%");
-            //preparedStatement.setInt(2, 5);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                // stringBuffer.append(rs.getString("name")+"- -"+rs.getString("birthday"));
                 queryResult = rs.getString(1) + " - " + rs.getString(2) + "<br>";
             }
 
@@ -264,7 +202,7 @@ public class OracleJdbcController {
         if (queryResult.contains("norecord")) {
             stringBuffer.append(queryResult);
         } else {
-            stringBuffer.append(insertsql1 + "<br>" + insertsql2 + "<br>" + updatesql + "<br>" /*+ callsql*/ + "<br>" + mulselctsql + "<br>" + "<br>查询结果：<br>" + queryResult);
+            stringBuffer.append(insertsql1 + "<br>" + insertsql2 + "<br>" + updatesql + "<br>" /*+ callsql*/ + "<br>" + mulselctsql + "<br>" + "<br>查询结果：<br>");
         }
         stringBuffer.append("</body></html>");
         return stringBuffer.toString();

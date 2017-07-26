@@ -20,7 +20,7 @@
     <a href="<%=contextPath%>/oracleHibernate">Hibernate</a>
     <a href="<%=contextPath%>/oracleMybatis">Mybatis</a>
     <a href="<%=contextPath%>/oracleJdbc">Jdbc Statement</a>
-    <a href="<%=contextPath%>/oracleJdbcPs">Jdbc PreparedStatement</a>  
+    <a href="<%=contextPath%>/oracleJdbcPs">Jdbc PreparedStatement</a>
     <a href="<%=contextPath%>/oracleJndi">Jndi</a>    
 </p>
 <p></p>
